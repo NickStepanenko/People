@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        body {
+            padding-top: 50px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
+        .thumbnail img {
+            width: 100%;
+        }
+        html {
+            overflow-y: scroll;
+        }
+        #peopleList {
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+        #peopleList td {
+            vertical-align: middle;
+            overflow: hidden;
+            border: none;
+        }
+        thead {
+            background-color: #f0f0f0;
+        }
+        .showMoreButton {
+            border-top: dotted;
+            position: absolute;
+            margin-left: -100px;
+            left: 50%;
+            width: 200px;
+        }
+        #ideas {
+            text-align: right;
+        }
+        #following {
+            text-align: right;
+        }
+        #followers {
+            text-align: right;
+        }
+        .nums {
+            text-align: right;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+        .name {
+            text-align: left;
+        }
+        .rating {
+            text-align: left;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+        .glyphicon-signal {
+            -moz-transform: scale(-1, 1);
+            -webkit-transform: scale(-1, 1);
+            -o-transform: scale(-1, 1);
+            -ms-transform: scale(-1, 1);
+            transform: scale(-1, 1);
+        }
+        .subscribe {
+            background-color: #9d9d9d;
+            border-radius: 16px;
+            border-style: none;
+            color: white;
+        }
+        .follow {
+            border-radius: 16px;
+            border-style: none;
+            color: white;
+        }
+        .unfollow {
+            border-radius: 16px;
+            border-style: none;
+            color: white;
+        }
+    </style>
+
+    <link href="src/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="src/jquery/dist/jquery.js" charset="utf-8"></script>
+    <script type="text/javascript" src="src/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+
+    <script>
+        (function ($) {$(document).ready(function() {
+
+            $("#tableName").append("<b>PEOPLE</b>");
+
+            var peopleList = [
+                {
+                    "photo": "src/images/hank_moody.jpg",
+                    "name": "Hank Moody",
+                    "rating": "10662",
+                    "ideas": "17419",
+                    "following": "128",
+                    "followers": "54742"
+                },
+                {
+                    "photo": "src/images/walter_white.jpg",
+                    "name": "Walter White",
+                    "rating": "5981",
+                    "ideas": "2304",
+                    "following": "65",
+                    "followers": "32817"
+                },
+                {
+                    "photo": "src/images/dexter_morgan.jpg",
+                    "name": "Dexter Morgan",
+                    "rating": "6023",
+                    "ideas": "12551",
+                    "following": "44",
+                    "followers": "20456"
+                },
+                {
+                    "photo": "src/images/rust_cohle.jpg",
+                    "name": "Rust Cohle",
+                    "rating": "12903",
+                    "ideas": "16954",
+                    "following": "4",
+                    "followers": "53787"
+                },
+                {
+                    "photo": "src/images/marty_hart.jpg",
+                    "name": "Marty Hart",
+                    "rating": "8883",
+                    "ideas": "456",
+                    "following": "26",
+                    "followers": "43320"
+                },
+                {
+                    "photo": "src/images/gregory_house.jpg",
+                    "name": "Gregory House M.D.",
+                    "rating": "9081",
+                    "ideas": "13665",
+                    "following": "8",
+                    "followers": "37221"
+                },
+                {
+                    "photo": "src/images/rick_grimes.jpg",
+                    "name": "Rick Grimes",
+                    "rating": "8455",
+                    "ideas": "327",
+                    "following": "14",
+                    "followers": "26540"
+                },
+                {
+                    "photo": "src/images/frank_underwood.jpg",
+                    "name": "Frank Underwood",
+                    "rating": "52779",
+                    "ideas": "46184",
+                    "following": "67",
+                    "followers": "89544"
+                },
+                {
+                    "photo": "src/images/hannibal_lecter.jpg",
+                    "name": "Dr. Hannibal Lecter",
+                    "rating": "36667",
+                    "ideas": "28196",
+                    "following": "17",
+                    "followers": "41885"
+                },
+                {
+                    "name": "The Yellow King",
+                    "rating": "4",
+                    "ideas": "1",
+                    "following": "0",
+                    "followers": "2"
+                }
+            ];
+
+            for(i=0; i<peopleList.length; i++) {
+                var row =
+                        "<tr'>" +
+                        "<td rowspan='2'><img src='" +
+                        (peopleList[i].photo ? peopleList[i].photo : "src/images/no_image.jpg") +
+                        "'></td>" +
+                        "<td class='name'>" +
+                        "<a href='#'><b>" + peopleList[i].name + "</b></a>" +
+                        "&nbsp;&nbsp;" +
+                        "<button type='button' class='subscribe'>" +
+                        "+" +
+                        "</button>" +
+                        "</td>" +
+                        "<td rowspan='2' class='nums'>" + peopleList[i].ideas + "</td>" +
+                        "<td rowspan='2' class='nums'>" + peopleList[i].following + "</td>" +
+                        "<td rowspan='2' class='nums'>" + peopleList[i].followers + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='rating'>" +
+                        "<span class='glyphicon glyphicon-signal text-muted'></span>&nbsp;" +
+                        peopleList[i].rating + "</td>" +
+                        "</tr>";
+
+                $("#peopleList").append(row);
+            }
+
+
+            $("#peopleList").slice(0, 8).show();
+
+            $(".subscribe").hover(
+                function(event) {
+                    event.preventDefault();
+                    button = $(this);
+
+                    if (button.hasClass('follow')) {
+                        button.text('Unfollow');
+                        button.removeClass('btn-success');
+                        button.addClass('btn-danger');
+                    } else {
+                        button.addClass('btn-success');
+                        button.text('Follow');
+                    }
+                },
+                function(event) {
+                    event.preventDefault();
+                    button = $(this);
+
+                    if (button.hasClass('follow')) {
+                        button.text('✓');
+                        button.removeClass('btn-danger');
+                        button.addClass('btn-success follow');
+                    } else {
+                        button.removeClass('btn-success');
+                        button.text('+');
+                    }
+                }
+            );
+
+            $(".subscribe").click(function() {
+                event.preventDefault();
+                button = $(this);
+
+                if (button.hasClass('follow')) {
+                    button.removeClass('btn-success follow');
+                    button.text('+');
+                    button.removeClass('btn-danger');
+                } else {
+                    button.text('✓');
+                    button.addClass('btn-success follow');
+                }
+            });
+
+        });})(jQuery);
+    </script>
+
+</head>
+<body>
+
+<div id="content" class="container">
+    <div id="tableName"><span class="glyphicon glyphicon-user"></span>&nbsp;</div>
+    <div class="panel panel-default">
+        <table id="peopleList" class="table table-bordered" style="border-radius: 5px;">
+            <thead>
+                <td id="photo" width="4%"></td>
+                <td id="person" width="44%"></td>
+                <td id="ideas" width="14%">Ideas</td>
+                <td id="following" width="14%">Following</td>
+                <td id="followers" width="14%">Followers</td>
+            </thead>
+            <tr></tr>
+        </table>
+        <td><button type="button" class="btn btn-default showMoreButton">SHOW MORE</button></td>
+    </div>
+</div>
+
+</body>
+</html>
